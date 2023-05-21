@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Listing } from '../types';
-import { fakeListings } from '../fake-data';
+import { ListingsService } from '../listings.service';
 
+// RxJS & HttpClient
 @Component({
   selector: 'app-listing-page',
   templateUrl: './listing-page.component.html',
@@ -10,7 +11,11 @@ import { fakeListings } from '../fake-data';
 export class ListingPageComponent {
   listings: Listing[] = [];
 
+  constructor(
+    private listingsService: ListingsService,
+  ) {}
+
   ngOnInit(): void {
-    this.listings = fakeListings;
+    this.listingsService.getListings().subscribe(listings => this.listings = listings);
   }
 }
